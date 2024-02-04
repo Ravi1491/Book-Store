@@ -28,7 +28,6 @@ export interface AuthorInfo {
 export interface UpdateBookInput {
     id: number;
     title?: Nullable<string>;
-    SellCount?: Nullable<number>;
     description?: Nullable<string>;
     price?: Nullable<number>;
 }
