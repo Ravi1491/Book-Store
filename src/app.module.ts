@@ -1,11 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import Joi from 'joi';
+import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
 import { applicationConfig } from 'config';
 import { Dialect } from 'sequelize';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { join } from 'path';
+import { JwtService } from '@nestjs/jwt';
+import { ApolloDriver } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 @Module({
   imports: [
@@ -35,8 +43,28 @@ import { SequelizeModule } from '@nestjs/sequelize';
       autoLoadModels: true,
       synchronize: false,
     }),
+    GraphQLModule.forRoot({
+      driver: ApolloDriver,
+      debug: false,
+      playground: applicationConfig.app.env !== 'base',
+      typePaths: ['./**/*.graphql'],
+      definitions: {
+        path: join(process.cwd(), 'src/graphql.ts'),
+      },
+      synchronize: true,
+      fieldResolverEnhancers: ['guards'],
+    }),
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    JwtService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule {}

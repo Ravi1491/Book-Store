@@ -3,7 +3,15 @@ import 'dotenv/config';
 export const applicationConfig = {
   app: {
     env: process.env.NODE_ENV,
-    port: process.env.NODE_ENV,
+    port: process.env.PORT,
+  },
+
+  jwt: {
+    secret: process.env.SERVER_AUTH_JWT_SECRET || 'server-secret',
+    cookieKey: 'book_store_jwt_key',
+
+    expiresIn: process.env.JWT_EXPIRES_IN || '1d',
+    issuer: process.env.JWT_ISSUER || 'book_store',
   },
 
   // Database

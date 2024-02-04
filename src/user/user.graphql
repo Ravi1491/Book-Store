@@ -1,0 +1,28 @@
+type User {
+  name: String!
+  email: String!
+  username: String!
+}
+
+enum Role {
+  ADMIN
+  RETAIL_USER
+  AUTHOR
+}
+
+input SignUpInput {
+  name: String!
+  email: String!
+  password: String!
+  username: String!
+  role: Role!
+}
+
+type Query {
+  user(id: Int!): User
+}
+
+type Mutation {
+  signUp(signUpInput: SignUpInput!): User!
+  login(email: String!, password: String!): User!
+}
