@@ -14,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
     }),
     AuthModule,
     UserModule,
+    BooksModule,
   ],
   controllers: [AppController],
   providers: [
