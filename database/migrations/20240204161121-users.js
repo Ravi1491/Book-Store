@@ -31,14 +31,17 @@ module.exports = {
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
+        field: 'created_at',
       },
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
+        field: 'updated_at',
       },
       deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
+        field: 'deleted_at',
       },
     });
   },

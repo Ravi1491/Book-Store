@@ -1,5 +1,5 @@
 type Book {
-  id: Int!
+  id: String!
   title: String!
   description: String!
   price: Int!
@@ -7,23 +7,24 @@ type Book {
 }
 
 type Author {
-  id: Int!
   name: String!
+  username: String!
 }
 
 input CreateBookInput {
   title: String!
   description: String!
   price: Int!
-  authors: AuthorInfo!
+  authors: [AuthorInfo]!
 }
 
 input AuthorInfo {
   name: String!
+  username: String!
 }
 
 input UpdateBookInput {
-  id: Int!
+  id: String!
   title: String
   description: String
   price: Int
@@ -36,6 +37,6 @@ type Query {
 
 type Mutation {
   createBook(createBookInput: CreateBookInput!): Book!
-  updateBook(updateBookInput: UpdateBookInput!): Book!
+  updateBook(updateBookInput: UpdateBookInput!): String!
   removeBook(id: String!): String!
 }

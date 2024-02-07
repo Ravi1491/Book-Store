@@ -4,6 +4,11 @@ type User {
   username: String!
 }
 
+type UserWithToken {
+  user: User!
+  token: String!
+}
+
 enum Role {
   ADMIN
   RETAIL_USER
@@ -23,6 +28,6 @@ type Query {
 }
 
 type Mutation {
-  signUp(signUpInput: SignUpInput!): User!
-  login(email: String!, password: String!): User!
+  signUp(signUpInput: SignUpInput!): UserWithToken!
+  login(email: String!, password: String!): UserWithToken!
 }

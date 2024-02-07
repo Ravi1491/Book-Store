@@ -1,22 +1,26 @@
-import { IsString, IsNotEmpty, IsNumber, Min, Max } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  Min,
+  Max,
+  IsOptional,
+} from 'class-validator';
+
+class AuthorInput {
+  name: string;
+
+  username: string;
+}
 
 export class CreateBookInput {
-  @IsString()
-  @IsNotEmpty()
   title: string;
 
-  @IsNotEmpty()
-  authors: object;
+  authors: [AuthorInput];
 
-  @IsString()
-  @IsNotEmpty()
   description: string;
 
-  @IsNumber()
-  SellCount: number;
+  sellCount?: number;
 
-  @IsNumber()
-  @Min(100)
-  @Max(1000)
   price: number;
 }

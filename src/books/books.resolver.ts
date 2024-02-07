@@ -5,10 +5,14 @@ import { UpdateBookInput } from './dto/update-book.input';
 import { CurrentUser } from 'src/auth/decorators/current-user';
 import { User, UserRole } from 'src/user/entities/user.entity';
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { UserService } from 'src/user/user.service';
 
 @Resolver('Book')
 export class BooksResolver {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(
+    private readonly booksService: BooksService,
+    private readonly userService: UserService,
+  ) {}
 
   @Mutation('createBook')
   async create(
@@ -24,10 +28,26 @@ export class BooksResolver {
         throw new Error('Price must be between 100 and 1000.');
       }
 
-      const newBook = await this.booksService.addBook(createBookInput);
+      createBookInput.authors.map(async (author) => {
+        const authorExist = await this.userService.findOne({
+          name: author.name,
+          username: author.username,
+        });
+
+        if (!authorExist) {
+          throw new NotFoundException('Author not found');
+        }
+      });
+
+      const payload: CreateBookInput = {
+        ...createBookInput,
+        sellCount: 0,
+      };
+
+      const newBook = await this.booksService.addBook(payload);
       return newBook;
     } catch (error) {
-      throw new Error('Failed to create a new book.');
+      throw new Error(`${error}`);
     }
   }
 
@@ -66,14 +86,27 @@ export class BooksResolver {
         );
       }
 
+      if (updateBookInput.price < 100 || updateBookInput.price > 1000) {
+        throw new Error('Price must be between 100 and 1000.');
+      }
+
+      if (updateBookInput.title) {
+        const book = await this.booksService.getBookById(updateBookInput.id);
+        if (!book) {
+          throw new NotFoundException('Book not found');
+        }
+      }
+
       const updatedBook = await this.booksService.update(
         updateBookInput.id,
         updateBookInput,
       );
+
       if (!updatedBook) {
         throw new NotFoundException('Book not found');
       }
-      return updatedBook;
+
+      return 'Book updated successfully.';
     } catch (error) {
       throw new Error('Failed to update the book.');
     }
@@ -88,9 +121,9 @@ export class BooksResolver {
         );
       }
 
-      const removedBook = await this.booksService.remove(id);
+      await this.booksService.remove(id);
 
-      return removedBook;
+      return 'Book removed successfully.';
     } catch (error) {
       throw new Error('Failed to remove the book.');
     }

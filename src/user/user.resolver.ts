@@ -17,9 +17,10 @@ export class UserResolver {
   @Mutation('signUp')
   async signup(
     @Args('signUpInput') createUserInput: CreateUserInput,
-    @Context('res') res: Response,
+    @Context() context: { res: Response },
   ) {
     try {
+      const { res } = context;
       const user = await this.userService.findOne({
         email: createUserInput.email,
       });
@@ -62,7 +63,10 @@ export class UserResolver {
         domain: 'localhost',
       });
 
-      return createUser;
+      return {
+        user: createUser,
+        token: jwtToken.token,
+      };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
@@ -99,9 +103,10 @@ export class UserResolver {
         domain: 'localhost',
       });
 
-      console.log(jwtToken);
-
-      return user;
+      return {
+        user,
+        token: jwtToken.token,
+      };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }

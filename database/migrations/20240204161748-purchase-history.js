@@ -11,6 +11,7 @@ module.exports = {
       bookId: {
         type: Sequelize.UUID,
         allowNull: false,
+        field: 'book_id',
         references: {
           model: 'books',
           key: 'id',
@@ -19,6 +20,7 @@ module.exports = {
       userId: {
         type: Sequelize.UUID,
         allowNull: false,
+        field: 'user_id',
         references: {
           model: 'users',
           key: 'id',
@@ -27,6 +29,7 @@ module.exports = {
       purchaseDate: {
         type: Sequelize.DATE,
         allowNull: false,
+        field: 'purchase_date',
       },
       price: {
         type: Sequelize.INTEGER,
@@ -39,14 +42,17 @@ module.exports = {
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
+        field: 'created_at',
       },
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
+        field: 'updated_at',
       },
       deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
+        field: 'deleted_at',
       },
     });
   },

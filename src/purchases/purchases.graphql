@@ -1,0 +1,24 @@
+type Purchase {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreatePurchaseInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdatePurchaseInput {
+  id: Int!
+}
+
+type Query {
+  purchases: [Purchase]!
+  purchase(id: Int!): Purchase
+}
+
+type Mutation {
+  createPurchase(createPurchaseInput: CreatePurchaseInput!): Purchase!
+  updatePurchase(updatePurchaseInput: UpdatePurchaseInput!): Purchase!
+  removePurchase(id: Int!): Purchase
+}

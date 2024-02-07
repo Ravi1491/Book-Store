@@ -14,7 +14,7 @@ import {
 @Table({
   underscored: true,
 })
-export class Book extends Model {
+export class Purchase extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
@@ -22,22 +22,30 @@ export class Book extends Model {
   })
   id: string;
 
-  @Column({ allowNull: false, unique: true })
-  title: string;
+  @Column({
+    allowNull: false,
+  })
+  bookId: string;
 
-  @Column({ allowNull: false, type: DataType.JSONB })
-  authors: object;
+  @Column({
+    allowNull: false,
+  })
+  userId: string;
 
-  @Column({ allowNull: false })
-  description: string;
+  @Column({
+    allowNull: false,
+  })
+  purchaseDate: Date;
 
-  @Column({ allowNull: false })
-  sellCount: number;
-
-  @Min(100)
-  @Max(1000)
-  @Column({ allowNull: false })
+  @Column({
+    allowNull: false,
+  })
   price: number;
+
+  @Column({
+    allowNull: false,
+  })
+  quantity: number;
 
   @CreatedAt
   createdAt: Date;

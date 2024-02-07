@@ -25,6 +25,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
+        field: 'sell_count',
       },
       price: {
         type: Sequelize.INTEGER,
@@ -37,14 +38,17 @@ module.exports = {
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
+        field: 'created_at',
       },
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
+        field: 'updated_at',
       },
       deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
+        field: 'deleted_at',
       },
     });
   },

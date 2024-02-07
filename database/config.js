@@ -12,6 +12,6 @@ module.exports = {
   database: process.env.DB_NAME,
 
   seederStorage: 'sequelize',
-  migrationStorageTableName: 'sequelize_meta_xG_app_server',
-  seederStorageTableName: 'sequelize_data_xG_app_server',
+  migrationStorageTableName: 'sequelize_meta_book_store_server',
+  seederStorageTableName: 'sequelize_data_book_store_server',
 };

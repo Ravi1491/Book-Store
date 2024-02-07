@@ -15,6 +15,7 @@ import { UserModule } from './user/user.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { BooksModule } from './books/books.module';
+import { PurchasesModule } from './purchases/purchases.module';
 
 @Module({
   imports: [
@@ -52,12 +53,16 @@ import { BooksModule } from './books/books.module';
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
       },
+      context: ({ req, res }) => {
+        return { req, res };
+      },
       synchronize: true,
       fieldResolverEnhancers: ['guards'],
     }),
     AuthModule,
     UserModule,
     BooksModule,
+    PurchasesModule,
   ],
   controllers: [AppController],
   providers: [
