@@ -28,6 +28,7 @@ type Query {
   getPurchaseById(id: String!): Purchase
   getUserPurchases(userId: String!): [Purchase]!
   getBookPurchases(bookId: String!): [Purchase]!
+  getMyPurchaseHistory: [Purchase]!
 }
 
 type Mutation {

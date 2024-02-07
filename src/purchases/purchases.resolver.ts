@@ -52,7 +52,13 @@ export class PurchasesResolver {
       createPurchaseInput['totalPrice'] =
         createPurchaseInput.quantity * bookExist.price;
 
-      return this.purchasesService.create(createPurchaseInput);
+      const purchase = await this.purchasesService.create(createPurchaseInput);
+
+      await this.booksService.update(createPurchaseInput.bookId, {
+        sellCount: bookExist.sellCount + createPurchaseInput.quantity,
+      });
+
+      return purchase;
     } catch (error) {
       throw new Error(`${error}`);
     }
@@ -97,6 +103,23 @@ export class PurchasesResolver {
 
       const purchases = await this.purchasesService.findAll({
         userId,
+      });
+
+      if (!purchases) {
+        throw new NotFoundException('No purchase history found.');
+      }
+
+      return purchases;
+    } catch (error) {
+      throw new Error(`${error}`);
+    }
+  }
+
+  @Query('getMyPurchaseHistory')
+  async getMyPurchaseHistory(@CurrentUser() user: User) {
+    try {
+      const purchases = await this.purchasesService.findAll({
+        userId: user.id,
       });
 
       if (!purchases) {

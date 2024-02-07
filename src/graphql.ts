@@ -74,6 +74,7 @@ export interface IQuery {
     getPurchaseById(id: string): Nullable<Purchase> | Promise<Nullable<Purchase>>;
     getUserPurchases(userId: string): Nullable<Purchase>[] | Promise<Nullable<Purchase>[]>;
     getBookPurchases(bookId: string): Nullable<Purchase>[] | Promise<Nullable<Purchase>[]>;
+    getMyPurchaseHistory(): Nullable<Purchase>[] | Promise<Nullable<Purchase>[]>;
     user(id: number): Nullable<User> | Promise<Nullable<User>>;
 }
 
