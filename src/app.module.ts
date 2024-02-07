@@ -16,6 +16,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { BooksModule } from './books/books.module';
 import { PurchasesModule } from './purchases/purchases.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { PurchasesModule } from './purchases/purchases.module';
       synchronize: true,
       fieldResolverEnhancers: ['guards'],
     }),
+    CommonModule,
     AuthModule,
     UserModule,
     BooksModule,

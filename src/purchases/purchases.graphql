@@ -1,24 +1,37 @@
+scalar Date
+
 type Purchase {
-  # Example field (placeholder)
-  exampleField: Int
+  id: String!
+  bookId: String!
+  userId: String!
+  bookPrice: Int!
+  totalPrice: Int!
+  quantity: Int!
+  purchaseDate: Date!
 }
 
 input CreatePurchaseInput {
-  # Example field (placeholder)
-  exampleField: Int
+  bookId: String!
+  userId: String!
+  quantity: Int!
+  purchaseDate: Date!
 }
 
 input UpdatePurchaseInput {
-  id: Int!
+  id: String!
+  quantity: Int
+  purchaseDate: Date
 }
 
 type Query {
-  purchases: [Purchase]!
-  purchase(id: Int!): Purchase
+  getAllPurchases: [Purchase]!
+  getPurchaseById(id: String!): Purchase
+  getUserPurchases(userId: String!): [Purchase]!
+  getBookPurchases(bookId: String!): [Purchase]!
 }
 
 type Mutation {
   createPurchase(createPurchaseInput: CreatePurchaseInput!): Purchase!
-  updatePurchase(updatePurchaseInput: UpdatePurchaseInput!): Purchase!
-  removePurchase(id: Int!): Purchase
+  updatePurchase(updatePurchaseInput: UpdatePurchaseInput!): String!
+  removePurchase(id: String!): String!
 }

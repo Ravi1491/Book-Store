@@ -34,11 +34,16 @@ export interface UpdateBookInput {
 }
 
 export interface CreatePurchaseInput {
-    exampleField?: Nullable<number>;
+    bookId: string;
+    userId: string;
+    quantity: number;
+    purchaseDate: Date;
 }
 
 export interface UpdatePurchaseInput {
-    id: number;
+    id: string;
+    quantity?: Nullable<number>;
+    purchaseDate?: Nullable<Date>;
 }
 
 export interface SignUpInput {
@@ -65,8 +70,10 @@ export interface Author {
 export interface IQuery {
     getAllBooks(): Nullable<Book>[] | Promise<Nullable<Book>[]>;
     getBookById(id: string): Nullable<Book> | Promise<Nullable<Book>>;
-    purchases(): Nullable<Purchase>[] | Promise<Nullable<Purchase>[]>;
-    purchase(id: number): Nullable<Purchase> | Promise<Nullable<Purchase>>;
+    getAllPurchases(): Nullable<Purchase>[] | Promise<Nullable<Purchase>[]>;
+    getPurchaseById(id: string): Nullable<Purchase> | Promise<Nullable<Purchase>>;
+    getUserPurchases(userId: string): Nullable<Purchase>[] | Promise<Nullable<Purchase>[]>;
+    getBookPurchases(bookId: string): Nullable<Purchase>[] | Promise<Nullable<Purchase>[]>;
     user(id: number): Nullable<User> | Promise<Nullable<User>>;
 }
 
@@ -75,14 +82,20 @@ export interface IMutation {
     updateBook(updateBookInput: UpdateBookInput): string | Promise<string>;
     removeBook(id: string): string | Promise<string>;
     createPurchase(createPurchaseInput: CreatePurchaseInput): Purchase | Promise<Purchase>;
-    updatePurchase(updatePurchaseInput: UpdatePurchaseInput): Purchase | Promise<Purchase>;
-    removePurchase(id: number): Nullable<Purchase> | Promise<Nullable<Purchase>>;
+    updatePurchase(updatePurchaseInput: UpdatePurchaseInput): string | Promise<string>;
+    removePurchase(id: string): string | Promise<string>;
     signUp(signUpInput: SignUpInput): UserWithToken | Promise<UserWithToken>;
     login(email: string, password: string): UserWithToken | Promise<UserWithToken>;
 }
 
 export interface Purchase {
-    exampleField?: Nullable<number>;
+    id: string;
+    bookId: string;
+    userId: string;
+    bookPrice: number;
+    totalPrice: number;
+    quantity: number;
+    purchaseDate: Date;
 }
 
 export interface User {

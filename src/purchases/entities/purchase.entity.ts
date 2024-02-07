@@ -14,7 +14,7 @@ import {
 @Table({
   underscored: true,
 })
-export class Purchase extends Model {
+export class PurchaseHistories extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
@@ -40,7 +40,12 @@ export class Purchase extends Model {
   @Column({
     allowNull: false,
   })
-  price: number;
+  bookPrice: number;
+
+  @Column({
+    allowNull: false,
+  })
+  totalPrice: number;
 
   @Column({
     allowNull: false,

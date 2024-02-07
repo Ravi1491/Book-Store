@@ -31,9 +31,15 @@ module.exports = {
         allowNull: false,
         field: 'purchase_date',
       },
-      price: {
+      bookPrice: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'book_price',
+      },
+      totalPrice: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        field: 'total_price',
       },
       quantity: {
         type: Sequelize.INTEGER,
