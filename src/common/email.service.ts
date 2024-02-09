@@ -35,7 +35,15 @@ export class EmailService {
     });
   }
 
-  async sendBulkMail(recipients: string[], subject: string, html: string) {
+  async sendBulkMail({
+    recipients,
+    subject,
+    html,
+  }: {
+    recipients: string[];
+    subject: string;
+    html: string;
+  }) {
     const promises = recipients.map((to) => {
       const mailOptions = {
         from: 'ravi149185@gmail.com',

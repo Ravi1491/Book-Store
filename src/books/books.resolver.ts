@@ -15,6 +15,7 @@ import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { Book } from './entities/book.entity';
 import { BookAuthorService } from './book-author.service';
+import { EmailService } from 'src/common/email.service';
 
 @Resolver('Book')
 export class BooksResolver {
@@ -22,6 +23,7 @@ export class BooksResolver {
     private readonly booksService: BooksService,
     private readonly bookAuthorService: BookAuthorService,
     private readonly userService: UserService,
+    private readonly emailService: EmailService,
   ) {}
 
   @Mutation('createBook')
@@ -55,6 +57,43 @@ export class BooksResolver {
       };
 
       const newBook = await this.booksService.addBook(payload);
+
+      const retailUsers = await this.userService.find({
+        role: UserRole.RETAIL_USER,
+      });
+
+      const emails = retailUsers.map((user) => user.email);
+
+      await this.emailService.sendBulkMail({
+        recipients: emails,
+        subject: 'New Book Added',
+        html: `
+        <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>New Book Release Notification</title>
+          </head>
+          <body>
+            <div style="background-color: #f0f0f0; padding: 20px;">
+              <h2>New Book Release Notification</h2>
+              <p>Hello,</p>
+              <p>We are excited to announce a new book release!</p>
+              <p>Details of the new book:</p>
+              <ul>
+                <li>Title: ${newBook.title}</li>
+                <li>Description: ${newBook.description}</li>
+              </ul>
+              <p>Visit our website for more information.</p>
+              <p>Thank you for being a valued member of our community!</p>
+              <p>Sincerely,</p>
+            </div>
+          </body>
+        </html>
+        `,
+      });
+
       return newBook;
     } catch (error) {
       throw new Error(`${error}`);
