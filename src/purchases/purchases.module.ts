@@ -13,5 +13,6 @@ import { PurchaseHistories } from './entities/purchase.entity';
     UserModule,
   ],
   providers: [PurchasesResolver, PurchasesService],
+  exports: [PurchasesService],
 })
 export class PurchasesModule {}

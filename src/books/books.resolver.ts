@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { BooksService } from './books.service';
 import { CreateBookInput } from './dto/create-book.input';
 import { UpdateBookInput } from './dto/update-book.input';
@@ -6,11 +13,14 @@ import { CurrentUser } from 'src/auth/decorators/current-user';
 import { User, UserRole } from 'src/user/entities/user.entity';
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
+import { Book } from './entities/book.entity';
+import { BookAuthorService } from './book-author.service';
 
 @Resolver('Book')
 export class BooksResolver {
   constructor(
     private readonly booksService: BooksService,
+    private readonly bookAuthorService: BookAuthorService,
     private readonly userService: UserService,
   ) {}
 
@@ -126,6 +136,28 @@ export class BooksResolver {
       return 'Book removed successfully.';
     } catch (error) {
       throw new Error('Failed to remove the book.');
+    }
+  }
+
+  @ResolveField()
+  async authors(@Parent() book: Book) {
+    try {
+      const authors = await this.bookAuthorService.findAll({
+        bookId: book.id,
+      });
+
+      const authorData = await Promise.all(
+        authors.map(async (author) => {
+          const authorData = await this.userService.findOne({
+            id: author.authorId,
+          });
+
+          return authorData;
+        }),
+      );
+      return authorData;
+    } catch (error) {
+      throw new Error('Failed to retrieve authors.');
     }
   }
 }

@@ -1,34 +1,29 @@
-// migrations/20240204121500-create-books.js
+// migrations/20240204123000-create-purchase-history.js
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('books', {
+    await queryInterface.createTable('book_authors', {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      title: {
-        type: Sequelize.STRING,
+      bookId: {
+        type: Sequelize.UUID,
         allowNull: false,
-        unique: true,
+        field: 'book_id',
+        references: {
+          model: 'books',
+          key: 'id',
+        },
       },
-      description: {
-        type: Sequelize.TEXT,
+      authorId: {
+        type: Sequelize.UUID,
         allowNull: false,
-      },
-      sellCount: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-        field: 'sell_count',
-      },
-      price: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        validate: {
-          min: 100,
-          max: 1000,
+        field: 'author_id',
+        references: {
+          model: 'users',
+          key: 'id',
         },
       },
       createdAt: {
@@ -50,6 +45,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('books');
+    await queryInterface.dropTable('book_authors');
   },
 };

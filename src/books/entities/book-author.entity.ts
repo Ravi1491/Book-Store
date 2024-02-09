@@ -7,14 +7,12 @@ import {
   CreatedAt,
   UpdatedAt,
   DeletedAt,
-  Min,
-  Max,
 } from 'sequelize-typescript';
 
 @Table({
   underscored: true,
 })
-export class Book extends Model {
+export class BookAuthors extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
@@ -22,19 +20,15 @@ export class Book extends Model {
   })
   id: string;
 
-  @Column({ allowNull: false, unique: true })
-  title: string;
+  @Column({
+    allowNull: false,
+  })
+  bookId: string;
 
-  @Column({ allowNull: false })
-  description: string;
-
-  @Column({ allowNull: false })
-  sellCount: number;
-
-  @Min(100)
-  @Max(1000)
-  @Column({ allowNull: false })
-  price: number;
+  @Column({
+    allowNull: false,
+  })
+  authorId: string;
 
   @CreatedAt
   createdAt: Date;

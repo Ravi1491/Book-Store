@@ -22,7 +22,7 @@ export class PurchasesService {
     });
   }
 
-  findAll(payload = {}, options = {}) {
+  async findAll(payload = {}, options = {}): Promise<PurchaseHistories[]> {
     return this.purchaseModel.findAll({
       where: payload,
       ...options,
