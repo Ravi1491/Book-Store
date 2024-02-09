@@ -20,10 +20,10 @@ export class TasksService {
     private readonly purchaseService: PurchasesService,
   ) {}
 
-  @Cron('5 * * * * *')
+  @Cron('0 0 1 * *')
   async handleCron() {
     try {
-      this.logger.debug('Called when the current second is 10');
+      this.logger.debug('Sending email to authors.');
       const authors = await this.userService.find({ role: UserRole.AUTHOR });
 
       let today = new Date();
@@ -120,8 +120,6 @@ export class TasksService {
           });
         }),
       );
-
-      this.logger.debug('Called when the current second is 45');
     } catch (error) {
       this.logger.error(`Failed to send email: ${error}`);
     }
