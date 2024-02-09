@@ -14,7 +14,7 @@
 
 ## Technical Stack
 
-- **Framework:** Express
+- **Framework:** NestJs
 - **Database:** Postgres
 - **ORM:** Sequelize
 - **Authentication:** JWT
