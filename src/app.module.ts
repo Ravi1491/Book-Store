@@ -18,6 +18,7 @@ import { BooksModule } from './books/books.module';
 import { PurchasesModule } from './purchases/purchases.module';
 import { CommonModule } from './common/common.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { BookRatingModule } from './book-rating/book-rating.module';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     UserModule,
     BooksModule,
     PurchasesModule,
+    BookRatingModule,
   ],
   controllers: [AppController],
   providers: [

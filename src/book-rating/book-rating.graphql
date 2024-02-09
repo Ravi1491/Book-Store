@@ -1,0 +1,31 @@
+type BookRating {
+  id: String!
+  bookId: String!
+  userId: String!
+  review: String
+  rating: Int
+}
+
+input CreateBookRatingInput {
+  bookId: String!
+  userId: String!
+  review: String
+  rating: Int
+}
+
+input UpdateBookRatingInput {
+  id: String!
+  review: String
+  rating: Int
+}
+
+type Query {
+  getAllBookRatings: [BookRating]!
+  getBookRatingById(id: String!): BookRating
+}
+
+type Mutation {
+  createBookRating(createBookRatingInput: CreateBookRatingInput!): BookRating!
+  updateBookRating(updateBookRatingInput: UpdateBookRatingInput!): BookRating!
+  deleteBookRating(id: String!): BookRating
+}

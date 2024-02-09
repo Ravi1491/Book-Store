@@ -14,6 +14,19 @@ export enum Role {
     AUTHOR = "AUTHOR"
 }
 
+export interface CreateBookRatingInput {
+    bookId: string;
+    userId: string;
+    review?: Nullable<string>;
+    rating?: Nullable<number>;
+}
+
+export interface UpdateBookRatingInput {
+    id: string;
+    review?: Nullable<string>;
+    rating?: Nullable<number>;
+}
+
 export interface CreateBookInput {
     title: string;
     description: string;
@@ -54,20 +67,17 @@ export interface SignUpInput {
     role: Role;
 }
 
-export interface Book {
+export interface BookRating {
     id: string;
-    title: string;
-    description: string;
-    price: number;
-    authors: Nullable<Author>[];
-}
-
-export interface Author {
-    name: string;
-    username: string;
+    bookId: string;
+    userId: string;
+    review?: Nullable<string>;
+    rating?: Nullable<number>;
 }
 
 export interface IQuery {
+    getAllBookRatings(): Nullable<BookRating>[] | Promise<Nullable<BookRating>[]>;
+    getBookRatingById(id: string): Nullable<BookRating> | Promise<Nullable<BookRating>>;
     getAllBooks(): Nullable<Book>[] | Promise<Nullable<Book>[]>;
     getBookById(id: string): Nullable<Book> | Promise<Nullable<Book>>;
     getAllPurchases(): Nullable<Purchase>[] | Promise<Nullable<Purchase>[]>;
@@ -79,6 +89,9 @@ export interface IQuery {
 }
 
 export interface IMutation {
+    createBookRating(createBookRatingInput: CreateBookRatingInput): BookRating | Promise<BookRating>;
+    updateBookRating(updateBookRatingInput: UpdateBookRatingInput): BookRating | Promise<BookRating>;
+    deleteBookRating(id: string): Nullable<BookRating> | Promise<Nullable<BookRating>>;
     createBook(createBookInput: CreateBookInput): Book | Promise<Book>;
     updateBook(updateBookInput: UpdateBookInput): string | Promise<string>;
     removeBook(id: string): string | Promise<string>;
@@ -87,6 +100,19 @@ export interface IMutation {
     removePurchase(id: string): string | Promise<string>;
     signUp(signUpInput: SignUpInput): UserWithToken | Promise<UserWithToken>;
     login(email: string, password: string): UserWithToken | Promise<UserWithToken>;
+}
+
+export interface Book {
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+    authors: Nullable<Author>[];
+}
+
+export interface Author {
+    name: string;
+    username: string;
 }
 
 export interface Purchase {

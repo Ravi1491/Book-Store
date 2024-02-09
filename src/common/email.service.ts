@@ -34,4 +34,33 @@ export class EmailService {
       return info.response;
     });
   }
+
+  async sendBulkMail(recipients: string[], subject: string, html: string) {
+    const promises = recipients.map((to) => {
+      const mailOptions = {
+        from: 'ravi149185@gmail.com',
+        to,
+        subject,
+        html,
+      };
+      return new Promise((resolve, reject) => {
+        this.transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log(error);
+            reject(error);
+          } else {
+            console.log('Email sent to ', to);
+            resolve(info.response);
+          }
+        });
+      });
+    });
+
+    try {
+      const results = await Promise.all(promises);
+      return results;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
