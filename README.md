@@ -4,7 +4,6 @@
 
 - **User Authentication:** Users can sign up for a new account and log in.
 - **Book Management:** Admin users can add, update, and delete books.
-- **Book Search:** Users can search for books by title, author, or genre.
 - **Book Purchase:** Users can purchase books and view their purchase history.
 - **Book Reviews:** Users can add reviews and ratings for books.
 - **Email Notifications:** Users receive email notifications for successful purchases.
