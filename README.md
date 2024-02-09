@@ -19,6 +19,14 @@
 - **ORM:** Sequelize
 - **Authentication:** JWT
 
+## Logic for Computing sellCount
+
+The sellCount attribute is computed dynamically based on the purchase history of each book. Whenever a book is purchased, the sellCount for that book is incremented accordingly. This ensures that the sellCount attribute is always up-to-date and reflects the actual number of sales for each book.
+
+## Mechanism for Sending Email Notifications
+
+Email notifications are sent to authors using a cron job to handle them asynchronously. At the end of very month, send an email to the corresponding author with the revenue details for the current month, current year, and total revenue. This ensures that the email notifications are sent in a timely manner without affecting the performance of the application.
+
 ## Database Design and Implementation Choices
 
 - **Users Table**: Contains information about users including their roles.
