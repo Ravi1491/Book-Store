@@ -17,6 +17,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { BooksModule } from './books/books.module';
 import { PurchasesModule } from './purchases/purchases.module';
 import { CommonModule } from './common/common.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { CommonModule } from './common/common.module';
       synchronize: true,
       fieldResolverEnhancers: ['guards'],
     }),
+    ScheduleModule.forRoot(),
     CommonModule,
     AuthModule,
     UserModule,
