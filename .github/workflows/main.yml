@@ -26,7 +26,7 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           source: ./
-          target: /home/htdocs
+          target: /home/${{ secrets.LIGHTSAIL_USERNAME }}/htdocs
 
       - name: SSH into Lightsail and restart server
         uses: appleboy/ssh-action@master
@@ -35,6 +35,6 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
-            cd /home/htdocs
+            cd /home/${{ secrets.LIGHTSAIL_USERNAME }}/htdocs
             npm install
             npm run start:prod
