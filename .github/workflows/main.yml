@@ -1,8 +1,4 @@
-name: Deploy to Lightsail
-
-env:
-  DEPLOY_PACKAGE_NAME_FILE: '${{ github.sha }}.zip'
-  DEPLOY_PACKAGE_NAME: '${{ github.sha }}'
+name: Deploy to AWS Lightsail
 
 on:
   push:
@@ -10,52 +6,35 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Git clone https://github.com/Ravi1491/Book-Store
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+      - name: Install dependencies
+        run: npm install
 
-      - name: Install dependencies and build
-        run: |
-          npm install
-          npm run build
+      - name: Build
+        run: npm run build
 
-      - name: Create zip deployment package
-        run: zip -r ${{ env.DEPLOY_PACKAGE_NAME_FILE }} ./dist/ -x *.git*
-
-      - name: Copy file via SSH password
+      - name: Copy files to Lightsail
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.LIGHTSAIL_IP }}
+          host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
-          password: ''
-          passphrase: ''
-          port: 22
-          source: ${{ env.DEPLOY_PACKAGE_NAME_FILE }}
-          target: '/home/${{ secrets.LIGHTSAIL_USERNAME }}'
+          source: ./
+          target: /home/htdocs
 
-      - name: Connect to AWS Lightsail and start HTTP server
+      - name: SSH into Lightsail and restart server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.LIGHTSAIL_IP }}
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
-          password: ''
-          passphrase: ''
-          port: 22
           script: |
-            sudo apt-get update && sudo apt-get install -y unzip
-            unzip -q -o "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }}" -d "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ secrets.LIGHTSAIL_ROOT_DIR }}"
-            rm "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }}"
-            cd "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ secrets.LIGHTSAIL_ROOT_DIR }}"
+            cd /home/htdocs
             npm install
-            nohup npm run start:prod >/dev/null 2>&1 &  # Run Nest.js server in the background and discard output
-            echo "Nest.js server started successfully"
+            npm run start:prod
