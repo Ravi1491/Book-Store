@@ -56,6 +56,6 @@ jobs:
             unzip -q -o "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }}" -d "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ secrets.LIGHTSAIL_ROOT_DIR }}"
             rm "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }}"
             cd "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ secrets.LIGHTSAIL_ROOT_DIR }}/dist"
-            npm install -g http-server
-            nohup http-server -p 4000 >/dev/null 2>&1 &  # Run HTTP server in the background and discard output
-            echo "HTTP server started successfully"
+            npm install --production
+            nohup node main.js >/dev/null 2>&1 &  # Run Nest.js server in the background and discard output
+            echo "Nest.js server started successfully"
