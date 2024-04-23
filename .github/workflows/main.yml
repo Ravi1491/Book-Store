@@ -57,5 +57,5 @@ jobs:
             rm "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }}"
             cd "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ secrets.LIGHTSAIL_ROOT_DIR }}/dist"
             npm install -g http-server
-            nohup http-server -p 5173 >/dev/null 2>&1 &  # Run HTTP server in the background and discard output
+            nohup http-server -p 4000 >/dev/null 2>&1 &  # Run HTTP server in the background and discard output
             echo "HTTP server started successfully"
