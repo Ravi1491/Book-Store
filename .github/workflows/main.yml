@@ -57,5 +57,6 @@ jobs:
             rm "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ env.DEPLOY_PACKAGE_NAME_FILE }}"
             cd "/home/${{ secrets.LIGHTSAIL_USERNAME }}/${{ secrets.LIGHTSAIL_ROOT_DIR }}/dist"
             npm install --production
+            cd ../  # Move back to the project root directory
             nohup npm run start:prod >/dev/null 2>&1 &  # Run Nest.js server in the background and discard output
             echo "Nest.js server started successfully"
