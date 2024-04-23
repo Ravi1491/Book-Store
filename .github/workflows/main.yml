@@ -22,7 +22,7 @@ jobs:
       - name: Copy files to Lightsail
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.LIGHTSAIL_HOST }}
+          host: ${{ secrets.LIGHTSAIL_IP }}
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           source: ./
