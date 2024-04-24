@@ -8,6 +8,9 @@ import { applicationConfig } from 'config';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  console.log('PORT : ', applicationConfig.app.port);
+  console.log('PORT process : ', process.env.PORT);
+
   const app = await NestFactory.create(AppModule);
 
   app.use(cookieParser());
@@ -45,9 +48,6 @@ async function bootstrap() {
       },
     }),
   );
-
-  console.log('PORT : ', applicationConfig.app.port);
-  console.log('PORT process : ', process.env.PORT);
 
   await app.listen(applicationConfig.app.port, '0.0.0.0');
 
