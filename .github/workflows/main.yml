@@ -37,5 +37,4 @@ jobs:
           script: |
             cd /home/${{ secrets.LIGHTSAIL_USERNAME }}/htdocs
             npm install
-            nohup npm run start:prod >/dev/null 2>&1 &  # Run Nest.js server in the background and discard output
-            echo "Nest.js server started successfully"
+            npm run start:prod
