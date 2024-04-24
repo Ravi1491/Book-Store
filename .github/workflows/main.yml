@@ -27,11 +27,10 @@ jobs:
           npm install
           npm run build
 
-      - name: Copy package.json to dist folder
-        run: cp package.json ./htdocs/
-
       - name: Create zip deployment package
-        run: zip -r ${{ env.DEPLOY_PACKAGE_NAME_FILE }} ./dist/ -x *.git*
+        run: |
+          zip -r ${{ env.DEPLOY_PACKAGE_NAME_FILE }} ./dist/ -x *.git*
+          zip -ur ${{ env.DEPLOY_PACKAGE_NAME_FILE }} ./package.json
 
       - name: Copy file via SSH password
         uses: appleboy/scp-action@master
