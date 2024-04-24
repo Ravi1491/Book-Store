@@ -8,8 +8,8 @@ import { applicationConfig } from 'config';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  console.log('PORT : ', applicationConfig.app.port);
-  console.log('PORT process : ', process.env.PORT);
+  console.log('DB : ', applicationConfig.db.host);
+  console.log('DB process : ', process.env.DB_HOST);
 
   const app = await NestFactory.create(AppModule);
 
