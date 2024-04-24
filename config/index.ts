@@ -9,7 +9,6 @@ export const applicationConfig = {
   jwt: {
     secret: process.env.SERVER_AUTH_JWT_SECRET || 'server-secret',
     cookieKey: 'book_store_jwt_key',
-
     expiresIn: process.env.JWT_EXPIRES_IN || '1d',
     issuer: process.env.JWT_ISSUER || 'book_store',
   },
