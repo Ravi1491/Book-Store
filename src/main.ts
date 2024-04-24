@@ -46,6 +46,9 @@ async function bootstrap() {
     }),
   );
 
+  console.log('PORT : ', applicationConfig.app.port);
+  console.log('PORT process : ', process.env.PORT);
+
   await app.listen(applicationConfig.app.port, '0.0.0.0');
 
   console.log(`Application is running on: ${applicationConfig.app.port}`);
