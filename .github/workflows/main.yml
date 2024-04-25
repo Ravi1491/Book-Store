@@ -21,6 +21,12 @@ jobs:
       - name: Install Our App
         run: npm install && npm run build
 
+      - name: Install PM2
+        run: npm install pm2 -g
+
+      - name: Start server with PM2
+        run: pm2 start npm --name "nestjs-app" -- start:prod
+
       - name: Copy files to Lightsail
         uses: appleboy/scp-action@master
         with:
@@ -38,5 +44,4 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
             cd /home/${{ secrets.LIGHTSAIL_USERNAME }}/htdocs
-            npm install
-            npm run start:prod
+            pm2 restart nestjs-app
