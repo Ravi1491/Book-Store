@@ -50,7 +50,7 @@ import { BookRatingModule } from './book-rating/book-rating.module';
     }),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
-      debug: false,
+      debug: true,
       playground: applicationConfig.app.env !== 'base',
       typePaths: ['./**/*.graphql'],
       definitions: {
